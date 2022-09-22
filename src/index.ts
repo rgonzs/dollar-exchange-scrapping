@@ -86,4 +86,5 @@ const main = async () => {
 
 	browser.close();
 };
+
 main();
