@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "chrome-aws-lambda": "^10.1.0",
     "pg": "^8.8.0",
     "puppeteer-core": "^18.0.3",
     "reflect-metadata": "^0.1.13",

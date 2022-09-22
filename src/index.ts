@@ -8,7 +8,7 @@ import {
 import { AppDatasource } from './services/db/db';
 import { Price } from './models/price.model';
 
-const main = async () => {
+const main = async (event: any, context: any, callback: any) => {
 	const browser = await getBrowser();
 
 	try {
@@ -83,8 +83,8 @@ const main = async () => {
 		);
 		await page.close();
 	}
-
 	browser.close();
+	return callback(null, 'ok');
 };
 
-main();
+exports.handler = main;
