@@ -21,10 +21,10 @@ export async function getExchangeData(
 	const prices = await page.evaluate((exchange) => {
 		const buy =
 			document.querySelector(exchange.buyQuery)?.textContent?.trim() ??
-			'no hay data';
+			'0.00';
 		const sell =
 			document.querySelector(exchange.sellQuery)?.textContent?.trim() ??
-			'no hay data';
+			'0.00';
 
 		return { buy, sell };
 	}, exchange);
