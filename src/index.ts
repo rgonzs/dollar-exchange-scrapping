@@ -86,5 +86,5 @@ const main = async (event: any, context: any, callback: any) => {
 	browser.close();
 	return callback(null, 'ok');
 };
-
+// main(null,null,null)
 exports.handler = main;
