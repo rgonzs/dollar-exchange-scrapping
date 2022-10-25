@@ -34,8 +34,8 @@ const main = async (event: any, context: any, callback: any) => {
 			url: 'https://www.rextie.com/',
 			name: 'rextie',
 			waitQuery: '.amount',
-			buyQuery: '.price.buy.ng-tns-c15-0 > .amount',
-			sellQuery: '.price.sell.ng-tns-c15-0 > .amount',
+			buyQuery: '.price.buy.ng-tns-c16-0 > .amount',
+			sellQuery: '.price.sell.ng-tns-c16-0 > .amount',
 		},
 		{
 			url: 'https://app.dollarhouse.pe/calculadora',
@@ -69,6 +69,7 @@ const main = async (event: any, context: any, callback: any) => {
 		if (sell.toUpperCase().includes('S')) {
 			sell = sell.split(' ')[1];
 		}
+		console.table({data, buy, sell})
 
 		await priceRepository.upsert(
 			{
@@ -83,8 +84,8 @@ const main = async (event: any, context: any, callback: any) => {
 		);
 		await page.close();
 	}
-	browser.close();
+	await browser.close();
 	return callback(null, 'ok');
 };
-// main(null,null,null)
+// main(null,null,console.log)
 exports.handler = main;

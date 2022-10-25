@@ -17,6 +17,8 @@ export async function getExchangeData(
 		waitUntil: 'networkidle0',
 	});
 	await page.waitForSelector(exchange.waitQuery);
+	await page.waitForTimeout(2000)
+	// await new Promise(r => setTimeout(r, 4000));
 
 	const prices = await page.evaluate((exchange) => {
 		const buy =
