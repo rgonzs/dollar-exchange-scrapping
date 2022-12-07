@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Price } from '../../models/price.model';
+import { Exchange } from '../../models/exchange.model';
 
 export const AppDatasource = new DataSource({
 	type: 'postgres',
@@ -8,5 +9,5 @@ export const AppDatasource = new DataSource({
 	username: process.env.PGUSER,
 	password: process.env.PGPASSWORD,
 	database: process.env.PGDATABASE,
-	entities: [Price],
+	entities: [Price, Exchange],
 });

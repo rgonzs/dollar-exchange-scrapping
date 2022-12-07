@@ -1,17 +1,18 @@
+import { Exchange } from 'models/exchange.model';
 import { Page } from 'puppeteer-core';
 import { IExchangePrice } from './response';
 
-export interface ExchangeProperties {
-	url: string;
-	name: string;
-	waitQuery: string;
-	buyQuery: string;
-	sellQuery: string;
-}
+// export interface ExchangeProperties {
+// 	url: string;
+// 	name: string;
+// 	waitQuery: string;
+// 	buyQuery: string;
+// 	sellQuery: string;
+// }
 
 export async function getExchangeData(
 	page: Page,
-	exchange: ExchangeProperties
+	exchange: Exchange
 ): Promise<IExchangePrice> {
 	await page.goto(exchange.url, {
 		waitUntil: 'networkidle0',
