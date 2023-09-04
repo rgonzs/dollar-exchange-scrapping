@@ -1,14 +1,14 @@
 import { getBrowser } from './services/browser/browser';
 
-import {
-	ExchangeProperties,
-	getExchangeData,
-} from './services/exchanges/general_exchange';
+import { getExchangeData } from './services/exchanges/general_exchange';
+// ExchangeProperties,
 
 import { AppDatasource } from './services/db/db';
-import { Price } from './models/price.model';
 
-const main = async () => {
+import { Price } from './models/price.model';
+import { Exchange } from './models/exchange.model';
+
+const main = async (event: any, context: any, callback: any) => {
 	const browser = await getBrowser();
 
 	try {
@@ -20,40 +20,42 @@ const main = async () => {
 		process.exit(1);
 	}
 
+	const exchangeRepository = AppDatasource.getRepository(Exchange);
 	const priceRepository = AppDatasource.getRepository(Price);
 
-	const exchanges: ExchangeProperties[] = [
-		{
-			url: 'https://kambista.com/',
-			name: 'kambista',
-			waitQuery: '.km_calc-encabezado',
-			buyQuery: '#valcompra',
-			sellQuery: '#valventa',
-		},
-		{
-			url: 'https://www.rextie.com/',
-			name: 'rextie',
-			waitQuery: '.amount',
-			buyQuery: '.price.buy.ng-tns-c15-0 > .amount',
-			sellQuery: '.price.sell.ng-tns-c15-0 > .amount',
-		},
-		{
-			url: 'https://app.dollarhouse.pe/calculadora',
-			name: 'dollar_house',
-			waitQuery: '#mainContent',
-			buyQuery: 'span#buy-exchange-rate',
-			sellQuery: 'span#sell-exchange-rate',
-		},
-		{
-			url: 'https://tkambio.com/',
-			name: 'tkambio',
-			waitQuery: '.block-exchange-rates',
-			buyQuery:
-				'.exchange-rate.purcharse-content.c-grey-400.flex-grow-1.flex-column.align-items-center .price',
-			sellQuery:
-				'.exchange-rate.sale-content.active.c-grey-400.flex-grow-1.flex-column.align-items-center .price',
-		},
-	];
+	const exchanges = await exchangeRepository.find({});
+	// const exchanges: ExchangeProperties[] = [
+	// 	{
+	// 		url: 'https://kambista.com/',
+	// 		name: 'kambista',
+	// 		waitQuery: '.km_calc-encabezado',
+	// 		buyQuery: '#valcompra',
+	// 		sellQuery: '#valventa',
+	// 	},
+	// 	{
+	// 		url: 'https://www.rextie.com/',
+	// 		name: 'rextie',
+	// 		waitQuery: '.amount',
+	// 		buyQuery: '.price.buy.ng-tns-c16-0 > .amount',
+	// 		sellQuery: '.price.sell.ng-tns-c16-0 > .amount',
+	// 	},
+	// 	{
+	// 		url: 'https://app.dollarhouse.pe/calculadora',
+	// 		name: 'dollar_house',
+	// 		waitQuery: '#mainContent',
+	// 		buyQuery: 'span#buy-exchange-rate',
+	// 		sellQuery: 'span#sell-exchange-rate',
+	// 	},
+	// 	{
+	// 		url: 'https://tkambio.com/',
+	// 		name: 'tkambio',
+	// 		waitQuery: '.block-exchange-rates',
+	// 		buyQuery:
+	// 			'.exchange-rate.purcharse-content.c-grey-400.flex-grow-1.flex-column.align-items-center .price',
+	// 		sellQuery:
+	// 			'.exchange-rate.sale-content.active.c-grey-400.flex-grow-1.flex-column.align-items-center .price',
+	// 	},
+	// ];
 
 	for (const exchange of exchanges) {
 		const page = await browser.newPage();
@@ -69,6 +71,7 @@ const main = async () => {
 		if (sell.toUpperCase().includes('S')) {
 			sell = sell.split(' ')[1];
 		}
+		console.table({ buy, sell });
 
 		await priceRepository.upsert(
 			{
@@ -83,7 +86,8 @@ const main = async () => {
 		);
 		await page.close();
 	}
-
-	browser.close();
+	await browser.close();
+	return callback(null, 'ok');
 };
-main();
+// main(null,null,console.log)
+exports.handler = main;
