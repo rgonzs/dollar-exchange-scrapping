@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core';
 import chromium from '@sparticuz/chrome-aws-lambda';
 
 async function getBrowser() {
-	const isAws = true;
+	const isAws = process.env.IS_AWS;
 	let browser: puppeteer.Browser;
 	if (isAws) {
 		browser = await chromium.puppeteer.launch({

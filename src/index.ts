@@ -31,30 +31,7 @@ const main = async (event: any, context: any, callback: any) => {
 	// 		waitQuery: '.km_calc-encabezado',
 	// 		buyQuery: '#valcompra',
 	// 		sellQuery: '#valventa',
-	// 	},
-	// 	{
-	// 		url: 'https://www.rextie.com/',
-	// 		name: 'rextie',
-	// 		waitQuery: '.amount',
-	// 		buyQuery: '.price.buy.ng-tns-c16-0 > .amount',
-	// 		sellQuery: '.price.sell.ng-tns-c16-0 > .amount',
-	// 	},
-	// 	{
-	// 		url: 'https://app.dollarhouse.pe/calculadora',
-	// 		name: 'dollar_house',
-	// 		waitQuery: '#mainContent',
-	// 		buyQuery: 'span#buy-exchange-rate',
-	// 		sellQuery: 'span#sell-exchange-rate',
-	// 	},
-	// 	{
-	// 		url: 'https://tkambio.com/',
-	// 		name: 'tkambio',
-	// 		waitQuery: '.block-exchange-rates',
-	// 		buyQuery:
-	// 			'.exchange-rate.purcharse-content.c-grey-400.flex-grow-1.flex-column.align-items-center .price',
-	// 		sellQuery:
-	// 			'.exchange-rate.sale-content.active.c-grey-400.flex-grow-1.flex-column.align-items-center .price',
-	// 	},
+	// 	}
 	// ];
 
 	for (const exchange of exchanges) {
